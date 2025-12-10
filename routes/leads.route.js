@@ -30,7 +30,7 @@ router.post("/send-otp", async (req, res) => {
     // 4️⃣ Send OTP email
     await sendEmail({
       to: email,
-      subject: "Your OTP - Bigwig Media",
+      subject: "Your OTP - Khalsa Property Dealer",
       html: `<p>Hello ${name},</p><p>Your OTP is: <strong>${otp}</strong></p>`,
     });
 
@@ -77,7 +77,7 @@ router.post("/verify-otp", async (req, res) => {
           <p style="margin-top: 30px; font-size: 15px; color: #777;">
             Regards,<br />
             <strong>Team KPD</strong><br />
-            <a href="https://www.bigwigdigital.in/" style="color: #007BFF;">Bigwig Digital</a>
+            <a href="https://www.bigwigdigital.in/" style="color: #007BFF;">Bigwig Media Digital</a>
           </p>
         </div>
       </div>
@@ -86,8 +86,8 @@ router.post("/verify-otp", async (req, res) => {
 
   // 2️⃣ Send internal notification to HR
   await sendEmail({
-    to: "accounts@bigwigmedia.in", // 🔁 Replace with actual HR email
-    subject: "New Lead Captured - Bigwig Media",
+    to: "hsinghkhalsa980@gmail.com", // 🔁 Replace with actual HR email
+    subject: "New Lead Captured - KPD",
     html: `
       <h3>New Lead Details</h3>
       <p><strong>Name:</strong> ${data.name}</p>

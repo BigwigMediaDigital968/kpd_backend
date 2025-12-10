@@ -30,8 +30,43 @@ router.post("/send-otp", async (req, res) => {
     // 4️⃣ Send OTP email
     await sendEmail({
       to: email,
-      subject: "Your OTP - Khalsa Property Dealer",
-      html: `<p>Hello ${name},</p><p>Your OTP is: <strong>${otp}</strong></p>`,
+      subject: "🔐 Your One-Time Password (OTP) – Khalsa Property Dealer",
+      html: `
+    <div style="font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7;">
+      <div style="max-width: 600px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 8px; border: 1px solid #e5e5e5;">
+        
+        <h2 style="color: #14469d; margin-top: 0;">Hello ${name},</h2>
+        
+        <p style="font-size: 15px; color: #333;">
+          Thank you for choosing <strong>Khalsa Property Dealer</strong>.  
+          To verify your identity, please use the One-Time Password (OTP) given below:
+        </p>
+
+        <div style="text-align: center; margin: 25px 0;">
+          <p style="font-size: 24px; letter-spacing: 4px; font-weight: bold; color: #ed1c24; margin: 0;">
+            ${otp}
+          </p>
+        </div>
+
+        <p style="font-size: 14px; color: #444;">
+          This OTP is valid for the next <strong>10 minutes</strong>.  
+          Please do not share it with anyone for your security.
+        </p>
+
+        <p style="font-size: 14px; color: #444;">
+          If you did not request this, please ignore the message or contact our support team immediately.
+        </p>
+
+        <br/>
+
+        <p style="font-size: 14px; color: #333;">
+          Warm regards,<br/>
+          <strong>Khalsa Property Dealer Team</strong>
+        </p>
+
+      </div>
+    </div>
+  `,
     });
 
     res.status(200).json({ message: "OTP sent to email." });

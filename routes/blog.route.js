@@ -8,7 +8,8 @@ const upload = multer({ storage });
 
 router.post("/add", upload.single("coverImage"), async (req, res) => {
   try {
-    const { title, slug, excerpt, content, author, tags } = req.body;
+    const { title, slug, excerpt, content, author, tags, coverImageAlt } =
+      req.body;
 
     if (!req.file || (!req.file.path && !req.file.secure_url)) {
       return res.status(400).json({ error: "Cover image is required." });
@@ -21,6 +22,12 @@ router.post("/add", upload.single("coverImage"), async (req, res) => {
     }
 
     const coverImage = req.file.secure_url || req.file.path;
+
+    // ✅ ALT text fallback (SEO-safe)
+    const imageAltText =
+      coverImageAlt && coverImageAlt.trim().length > 0
+        ? coverImageAlt.trim()
+        : title;
 
     // ✅ Handle schemaMarkup as array (from frontend or Postman)
     let schemaMarkup = [];
@@ -41,6 +48,7 @@ router.post("/add", upload.single("coverImage"), async (req, res) => {
 
       tags: tags?.split(",").map((tag) => tag.trim()),
       coverImage,
+      coverImageAlt: imageAltText,
       schemaMarkup, // stored as array
 
       // likes is not passed intentionally — default is 0
@@ -73,7 +81,8 @@ router.get("/viewblog", async (req, res) => {
 
 router.put("/:slug", upload.single("coverImage"), async (req, res) => {
   const { slug } = req.params;
-  const { title, content, author, excerpt, tags, schemaMarkup } = req.body;
+  const { title, content, author, excerpt, tags, schemaMarkup, coverImageAlt } =
+    req.body;
 
   try {
     const updateFields = {
@@ -83,6 +92,7 @@ router.put("/:slug", upload.single("coverImage"), async (req, res) => {
       ...(excerpt && { excerpt }),
       ...(tags && { tags: tags.split(",").map((tag) => tag.trim()) }),
       ...(schemaMarkup && { schemaMarkup }), // 🔥 store as-is
+      ...(coverImageAlt && { coverImageAlt: coverImageAlt.trim() }),
 
       lastUpdated: new Date(),
     };

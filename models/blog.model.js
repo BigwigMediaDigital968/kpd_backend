@@ -26,6 +26,10 @@ const blogPostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  coverImageAlt: {
+    type: String,
+    required: true,
+  },
   tags: {
     type: [String],
     default: [],

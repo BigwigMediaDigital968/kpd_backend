@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "6938709c5a5c688e70a6061a"
+  },
+  "email": "parashar.isha64@gmail.com",
+  "createdAt": {
+    "$date": "2025-12-09T18:55:24.416Z"
+  },
+  "updatedAt": {
+    "$date": "2025-12-09T18:55:24.416Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "693c1bab7527c7717d7398c9"
+  },
+  "name": "Aman",
+  "email": "kpds.13@gmail.com",
+  "phone": "8368607860",
+  "purpose": "buy",
+  "message": "Need flat",
+  "verified": true,
+  "createdAt": {
+    "$date": "2025-12-12T13:42:03.826Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6965f21f9f865fd200018078"
+  },
+  "name": "abc",
+  "email": "chandanpms@gmail.com",
+  "phone": "1234567890",
+  "purpose": "buy",
+  "message": "aaaa",
+  "verified": true,
+  "createdAt": {
+    "$date": "2026-01-13T07:19:59.819Z"
+  },
+  "__v": 0
+}]

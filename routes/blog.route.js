@@ -8,7 +8,7 @@ const upload = multer({ storage });
 
 router.post("/add", upload.single("coverImage"), async (req, res) => {
   try {
-    const { title, slug, excerpt, content, author, tags, coverImageAlt } =
+    const { title, slug, excerpt, content, author, tags, coverImageAlt, faqs } =
       req.body;
 
     if (!req.file || (!req.file.path && !req.file.secure_url)) {
@@ -39,6 +39,16 @@ router.post("/add", upload.single("coverImage"), async (req, res) => {
       }
     }
 
+    // ⭐ Handle FAQs
+    let parsedFaqs = [];
+    if (faqs) {
+      try {
+        parsedFaqs = typeof faqs === "string" ? JSON.parse(faqs) : faqs;
+      } catch (err) {
+        return res.status(400).json({ error: "Invalid FAQ format" });
+      }
+    }
+
     const blogPost = new BlogPost({
       title,
       slug,
@@ -50,6 +60,7 @@ router.post("/add", upload.single("coverImage"), async (req, res) => {
       coverImage,
       coverImageAlt: imageAltText,
       schemaMarkup, // stored as array
+      faqs: parsedFaqs,
 
       // likes is not passed intentionally — default is 0
     });
@@ -81,10 +92,17 @@ router.get("/viewblog", async (req, res) => {
 
 router.put("/:slug", upload.single("coverImage"), async (req, res) => {
   const { slug } = req.params;
-  const { title, content, author, excerpt, tags, schemaMarkup, coverImageAlt } =
+  const { title, content, author, excerpt, tags, schemaMarkup, coverImageAlt, faqs} =
     req.body;
 
   try {
+
+    let parsedFaqs;
+
+    if (faqs) {
+      parsedFaqs = typeof faqs === "string" ? JSON.parse(faqs) : faqs;
+    }
+
     const updateFields = {
       ...(title && { title }),
       ...(content && { content }),
@@ -93,6 +111,7 @@ router.put("/:slug", upload.single("coverImage"), async (req, res) => {
       ...(tags && { tags: tags.split(",").map((tag) => tag.trim()) }),
       ...(schemaMarkup && { schemaMarkup }), // 🔥 store as-is
       ...(coverImageAlt && { coverImageAlt: coverImageAlt.trim() }),
+      ...(parsedFaqs && { faqs: parsedFaqs }),
 
       lastUpdated: new Date(),
     };

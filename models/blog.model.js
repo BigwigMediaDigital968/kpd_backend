@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const faqSchema = new mongoose.Schema({
+  question: {
+    type: String,
+    required: true,
+  },
+  answer: {
+    type: String,
+    required: true,
+  },
+});
+
 const blogPostSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -19,7 +30,7 @@ const blogPostSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: String, // Just the name, no avatar
+    type: String,
     required: true,
   },
   coverImage: {
@@ -35,8 +46,14 @@ const blogPostSchema = new mongoose.Schema({
     default: [],
   },
 
+  // ⭐ FAQ Section
+  faqs: {
+    type: [faqSchema],
+    default: [],
+  },
+
   schemaMarkup: {
-    type: [String], // array of JSON-LD strings
+    type: [String],
     default: [],
   },
 
